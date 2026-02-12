@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Valentine's Day 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:url('./pngtree-pink-white-cloud-love-heart-valentine-s-day-background-image_930732.jpg') no-repeat center center/cover;
+    overflow:hidden;
+    position:relative;
+    transition:1s ease;
+}
+
+/* overlay */
+body::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:linear-gradient(135deg, rgba(255,105,180,0.4), rgba(255,182,193,0.4));
+    backdrop-filter:blur(3px);
+    transition:1s ease;
+}
+
+/* floating hearts */
+.heart{
+    position:absolute;
+    bottom:-20px;
+    font-size:20px;
+    animation:floatUp linear infinite;
+    opacity:0.8;
+}
+
+@keyframes floatUp{
+    from{ transform:translateY(0) scale(1); opacity:0.8;}
+    to{ transform:translateY(-110vh) scale(1.5); opacity:0;}
+}
+
+/* card */
+.card{
+    position:relative;
+    width:350px;
+    padding:40px;
+    text-align:center;
+    border-radius:25px;
+    backdrop-filter:blur(20px);
+    background:rgba(255,255,255,0.15);
+    border:1px solid rgba(255,255,255,0.3);
+    box-shadow:0 10px 40px rgba(0,0,0,0.2);
+    overflow:hidden;
+    z-index:1;
+    transition:0.5s ease;
+}
+
+/* glow when yes */
+.card.love{
+    transform:scale(1.1);
+    box-shadow:0 0 60px rgba(255,105,180,0.8);
+}
+
+/* grey mode */
+body.sad{
+    background:url('./sad.jpg') no-repeat center center/cover;
+}
+
+body.sad::before{
+    background:rgba(80,80,80,0.6);
+}
+
+body.sad .card{
+    background:rgba(200,200,200,0.1);
+    border:1px solid rgba(200,200,200,0.3);
+    box-shadow:0 0 40px rgba(100,100,100,0.5);
+}
+
+h1{
+    font-size:26px;
+    color:white;
+    margin-bottom:15px;
+}
+
+p{
+    color:white;
+    font-weight:300;
+    margin-bottom:25px;
+}
+
+button{
+    padding:10px 20px;
+    margin:5px;
+    border-radius:30px;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.yes{
+    background:linear-gradient(90deg,#ff5ea8,#ff8ac9);
+    color:white;
+}
+
+.no{
+    background:grey;
+    color:white;
+}
+
+.hidden{
+    display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+    <h1 id="head">รักเราไหม 💕</h1>
+    <p id="p">วันนี้เป็นวันพิเศษนะ...</p>
+
+    <div id="question">
+        <button class="yes" onclick="answerYes()">❤️ Yes</button>
+        <button class="no" onclick="answerNo()">💔 No</button>
+    </div>
+
+    <div id="result" class="hidden">
+        <h2 id="resultText"></h2>
+    </div>
+</div>
+
+<script>
+
+/* floating hearts background */
+let heartInterval = setInterval(createHeart, 500);
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="💖";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(3+Math.random()*4)+"s";
+    heart.style.fontSize=(15+Math.random()*20)+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>{heart.remove();},7000);
+}
+
+function createbrokenHeart(){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="💔";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(3+Math.random()*4)+"s";
+    heart.style.fontSize=(15+Math.random()*20)+"px";
+    document.body.appendChild(heart);
+    setTimeout(()=>{heart.remove();},7000);
+}
+
+
+/* YES effect */
+function answerYes(){
+    document.getElementById("card").classList.add("love");
+    document.getElementById("question").classList.add("hidden");
+    document.getElementById("result").classList.remove("hidden");
+    document.getElementById("resultText").innerHTML="เย้ 💖 เราก็รักเธอเหมือนกันนะ!";
+
+    for(let i=0;i<30;i++){
+        setTimeout(createHeart, i*100);
+    }
+}
+
+/* NO effect */
+function answerNo(){
+    clearInterval(heartInterval);
+    document.body.classList.add("sad");
+    document.getElementById("question").classList.add("hidden");
+    document.getElementById("result").classList.remove("hidden");
+    document.getElementById("head").innerHTML="งอนละ";
+    document.getElementById("p").innerHTML="ไปเลยย"
+    document.getElementById("resultText").innerHTML="ควย ไปไหนก็ไป💔";
+    setInterval(createbrokenHeart, 500);
+}
+
+</script>
+
+</body>
+</html>
